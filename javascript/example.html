@@ -5,19 +5,53 @@
 </head>
 
 <body>
-  <canvas id="video-canvas" width="800" height="600" style="background: #ddd;"></canvas>
+  <canvas id="video-canvas" width="800" height="600" style="background: #ddd;" ></canvas>
   <br/>
-  <button id="camera-button" onclick="TopCodes.startStopVideoScan('video-canvas')">Start / Stop</button>
+  <button id="camera-button" onclick="TopCodes.startStopVideoScan('video-canvas')" style="float:right;">Start / Stop</button>
+
+  <video id="triceratops" style="position:absolute;left:8px;top:8px;" onended="hideVid()">
+      <source src ="../Triceratops_Anim.mp4" type="video/mp4" >
+  </video>
 
   <script src="topcodes.js"></script>
 
   <script>
 
-  TopCodes.setVideoFrameCallback("video-canvas", function(jsonString) {
-    var json = JSON.parse(jsonString);
-    drawCodes(json.topcodes);
-  });
+   TopCodes.setVideoFrameCallback("video-canvas", function(jsonString) {
+       var json = JSON.parse(jsonString);
+       playVid(json.topcodes);
+   });
 
+   /* var code2vid{};*/
+   var triceratops_vid = document.getElementById("triceratops");
+   triceratops_vid.style.visibility = 'hidden';
+   /* code2vid[31] = triceratops_vid;*/
+
+   function hideVid(){
+       alert("Gee am I hungry. Can you feed me pretty please?");
+       document.getElementById("video-canvas").style.visibility = 'visible';
+       triceratops_vid.style.visibility = 'hidden';
+   }
+
+   function showVid(vSpecialVid){
+       document.getElementById("video-canvas").style.visibility = 'hidden';
+       vSpecialVid.style.visibility = 'visible';
+   }
+   
+   function playVid(topcodes) {
+       for(i = 0; i < topcodes.length; i++){
+           /* var my_vid = code2vid[i.toString()];*/
+           /* if(typeof my_vid != 'undefined'){*/
+           /* my_vid.play();*/
+           if(topcodes[i].code == 31){
+               showVid(triceratops_vid);
+               triceratops_vid.play();
+           }
+           else if(topcodes[i].code == 361){
+               alert("Hooray! I'm a full dino!");
+           }
+       }
+   }
 
   function drawCodes(topcodes) {
     var ctx = document.querySelector("#video-canvas").getContext('2d');
