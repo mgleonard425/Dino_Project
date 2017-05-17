@@ -22,10 +22,10 @@
        playVid(json.topcodes);
    });
 
-   /* var code2vid{};*/
    var triceratops_vid = document.getElementById("triceratops");
    triceratops_vid.style.visibility = 'hidden';
-   /* code2vid[31] = triceratops_vid;*/
+
+   var lastSeen;
 
    function hideVid(){
        alert("Gee am I hungry. Can you feed me pretty please?");
@@ -40,14 +40,13 @@
    
    function playVid(topcodes) {
        for(i = 0; i < topcodes.length; i++){
-           /* var my_vid = code2vid[i.toString()];*/
-           /* if(typeof my_vid != 'undefined'){*/
-           /* my_vid.play();*/
-           if(topcodes[i].code == 31){
+           if(topcodes[i].code == 31 && (lastSeen == 361 || lastSeen == undefined)){
+               lastSeen = topcodes[i].code;
                showVid(triceratops_vid);
                triceratops_vid.play();
            }
-           else if(topcodes[i].code == 361){
+           else if(topcodes[i].code == 361 && (lastSeen == 31)){
+               lastSeen = undefined;
                alert("Hooray! I'm a full dino!");
            }
        }
